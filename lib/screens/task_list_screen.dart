@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoey/screens/add_items_screen.dart';
+import 'package:todoey/widgets/items_list.dart';
 class TaskList extends StatelessWidget {
    TaskList({Key? key}) : super(key: key);
   List<String> checkouts = ['excercise', 'break fast', 'music'];
@@ -7,6 +9,17 @@ class TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+       showModalBottomSheet(context: context,
+           builder: (BuildContext context){
+         return AddItemsList();
+           });
+        },
+        child: Icon(CupertinoIcons.add,
+        size: 30,),
+        backgroundColor: Colors.lightBlueAccent,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -17,7 +30,7 @@ class TaskList extends StatelessWidget {
                 child: Column(
 
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
+                  children: const [
                     CircleAvatar(
 
                         child: Icon(CupertinoIcons.list_bullet,
@@ -48,11 +61,7 @@ class TaskList extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30),),
                 ),
-                child: ListView.builder(
-                   itemCount: 10,
-                    itemBuilder: (context, index){
-                      return
-                    }),
+                child: ItemsList()
               ),
             ),
           ]
