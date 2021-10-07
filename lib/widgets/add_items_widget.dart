@@ -1,24 +1,35 @@
-import 'package:flutter/material.dart';
-class AddToDo extends StatelessWidget {
-  const AddToDo({Key? key}) : super(key: key);
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:todoey/models/task_model.dart';
+class AddToDo extends StatefulWidget {
+
+
+  static String? addTitleText;
+ static List<String>? tasking = [];
+
+  @override
+  State<AddToDo> createState() => _AddToDoState();
+}
+
+class _AddToDoState extends State<AddToDo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(50.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('add items'.toUpperCase(),
+         const Text('Add Items',
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style:  TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
             color: Colors.lightBlueAccent,
 
           ),),
           SizedBox( height:  15,),
-         const TextField(
-            decoration: InputDecoration(
+          TextField(
+            decoration: const InputDecoration(
               hintText: 'Enter your activty',
               hintStyle: TextStyle(
                 fontSize: 16,
@@ -29,22 +40,30 @@ class AddToDo extends StatelessWidget {
     // fontSize: 16,
     // color: Colors.blueGrey,
     //         ),
-              enabledBorder: UnderlineInputBorder(
+              enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.blueAccent, width: 3
+                  color: Colors.blueAccent, width: 1
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(100),),
+                borderRadius: BorderRadius.all(Radius.circular(20),),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.blueAccent,
+                  width: 2
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               )
           ),
+         onChanged: (String val){
+
+
+         },
+         // onSubmitted: (String value){
+         //      titleText = value;
+         // },
 
          ),
-          SizedBox( height: 25,),
+          const SizedBox( height: 25,),
           Row(
             children: [
               Expanded(
@@ -60,6 +79,9 @@ class AddToDo extends StatelessWidget {
 
                         ),),
                 onPressed: (){
+                  setState(() {
+
+                  });
 
                 },),
               ),

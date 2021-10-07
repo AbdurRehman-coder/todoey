@@ -1,10 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/add_items_screen.dart';
+import 'package:todoey/widgets/add_items_widget.dart';
 import 'package:todoey/widgets/items_list.dart';
-class TaskList extends StatelessWidget {
+import 'package:todoey/models/task_model.dart';
+class TaskList extends StatefulWidget {
    TaskList({Key? key}) : super(key: key);
-  List<String> checkouts = ['excercise', 'break fast', 'music'];
+
+  @override
+  State<TaskList> createState() => _TaskListState();
+}
+
+class _TaskListState extends State<TaskList> {
+  // some arguments that will be passed to the items_list file
+  List<Task> task = [
+    Task(titleText: 'Brushing my teeth'),
+    Task(titleText: 'Brushing my Shoes'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +26,14 @@ class TaskList extends StatelessWidget {
         onPressed: (){
        showModalBottomSheet(context: context,
            builder: (BuildContext context){
-         return AddItemsList();
+         return AddItemsList(getTextFieldData:
+             (getTextToAdd){
+               setState(() {
+                 task.add(Task(titleText: getTextToAdd));
+               });
+               Navigator.pop(context);
+             }
+         );
            });
         },
         child: Icon(CupertinoIcons.add,
@@ -26,11 +46,11 @@ class TaskList extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 60, 30, 30),
+                padding:  EdgeInsets.fromLTRB(30, 60, 30, 30),
                 child: Column(
 
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children:  [
                     CircleAvatar(
 
                         child: Icon(CupertinoIcons.list_bullet,
@@ -38,19 +58,18 @@ class TaskList extends StatelessWidget {
                     backgroundColor: Colors.white,
                     radius: 25,),
                     SizedBox( height: 10,),
-                    Text('Todo List',
+                    Text('Todoey',
                       style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),),
                     SizedBox(height: 5,),
-                    Text('12 tasks remaining',
+                    Text('${task.length} Task',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
-                      ),),
-                  ],
+                      ),),                  ],
                 ),
               ),
             ),
@@ -61,12 +80,11 @@ class TaskList extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30),),
                 ),
-                child: ItemsList()
+                child: ItemsList(tasks: task),
               ),
             ),
           ]
       ),
     );
   }
-
 }
