@@ -87,7 +87,7 @@ class _AddItemsListState extends State<AddItemsList> {
 
                     ),),
                   onPressed: (){
-                    Provider.of<AddToModel>(context, listen: false).addToList(taskData: textFieldData);
+                    Provider.of<AddToModel>(context, listen: false).addToList(textFieldData);
                      Navigator.pop(context);
                     // setState(() {
                     //   widget.getTextFieldData!(textFieldData);

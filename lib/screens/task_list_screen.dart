@@ -43,51 +43,55 @@ class _TaskListState extends State<TaskList> {
         size: 30,),
         backgroundColor: Colors.lightBlueAccent,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Padding(
-                padding:  EdgeInsets.fromLTRB(30, 60, 30, 30),
-                child: Column(
+      body: Consumer<AddToModel>(
+        builder: (context, provider, child){
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Padding(
+                    padding:  EdgeInsets.fromLTRB(30, 60, 30, 30),
+                    child: Column(
 
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
-                    CircleAvatar(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:  [
+                        const CircleAvatar(
 
-                        child: Icon(CupertinoIcons.list_bullet,
-                        color: Colors.lightBlueAccent,),
-                    backgroundColor: Colors.white,
-                    radius: 25,),
-                    SizedBox( height: 10,),
-                    Text('Todoey',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),),
-                    SizedBox(height: 5,),
-                    Text('${Provider.of<AddToModel>(context).taskList.length} Task',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),),                  ],
+                          child: const Icon(CupertinoIcons.list_bullet,
+                            color: Colors.lightBlueAccent,),
+                          backgroundColor: Colors.white,
+                          radius: 25,),
+                        SizedBox( height: 10,),
+                        Text('Todoey',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),),
+                        SizedBox(height: 5,),
+                        Text('${provider.listLength} Task',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),),                  ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                  margin: EdgeInsets.only(top: 25),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30),),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 25),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30),),
+                    ),
+                    child: ItemsList(),
+
+                  ),
                 ),
-                child: ItemsList(),
-                // child: ItemsList(tasks: task),
-              ),
-            ),
-          ]
+              ]
+          );
+        }
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todoey/models/add_to_model.dart';
 import 'package:todoey/models/task_model.dart';
 import 'package:todoey/screens/task_list_screen.dart';
-import 'items_tile.dart';
+
 class ItemsList extends StatefulWidget {
 
 
@@ -20,22 +20,24 @@ class ItemsList extends StatefulWidget {
 }
 
 class _ItemsListState extends State<ItemsList> {
-  bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
       return Consumer<AddToModel>(
           builder: (context, provid, child) {
             return ListView.builder(
-                itemCount: Provider.of<AddToModel>(context).taskList.length,
+                itemCount: provid.listLength,
                 itemBuilder: (context, index){
                   return ListTile(
+                    onLongPress: (){
+                      provid.removeTile(index);
+                    },
                     onTap: (){
 
                     },
                     title: Text(
-                      provid.taskList[index].titleText!,
+                      provid.tasks[index].titleText!,
                       style: TextStyle(
-                        decoration: provid.isChecked! ? TextDecoration.lineThrough : null,
+                        decoration: provid.tasks[index].ischecked! ? TextDecoration.lineThrough : null,
                       ),
                     ),
                     trailing: Checkbox(
@@ -43,14 +45,9 @@ class _ItemsListState extends State<ItemsList> {
                         fillColor: MaterialStateProperty.all(Colors.lightBlueAccent),
                         checkColor: Colors.red,
                         //value: context.watch<AddToModel>().isChecked,
-                        value: provid.taskList[index].ischecked,
+                        value: provid.tasks[index].ischecked,
                         onChanged: (value){
-                          // Provider.of<AddToModel>(context, listen: false);
-                          provid.addToList(value: value);
-
-                          // setState(() {
-                          //   Provider.of<Task>(context).toggleChecked();
-                          // });
+                       provid.toggleTask(provid.tasks[index]);
                         }
                     ),
 
