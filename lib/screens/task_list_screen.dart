@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/add_to_model.dart';
 import 'package:todoey/screens/add_items_screen.dart';
 import 'package:todoey/widgets/add_items_widget.dart';
 import 'package:todoey/widgets/items_list.dart';
@@ -26,14 +28,15 @@ class _TaskListState extends State<TaskList> {
         onPressed: (){
        showModalBottomSheet(context: context,
            builder: (BuildContext context){
-         return AddItemsList(getTextFieldData:
-             (getTextToAdd){
-               setState(() {
-                 task.add(Task(titleText: getTextToAdd));
-               });
-               Navigator.pop(context);
-             }
-         );
+         return AddItemsList();
+         // return AddItemsList(getTextFieldData:
+         //     (getTextToAdd){
+         //       setState(() {
+         //         task.add(Task(titleText: getTextToAdd));
+         //       });
+         //       Navigator.pop(context);
+         //     }
+         // );
            });
         },
         child: Icon(CupertinoIcons.add,
@@ -65,8 +68,8 @@ class _TaskListState extends State<TaskList> {
                         color: Colors.white,
                       ),),
                     SizedBox(height: 5,),
-                    Text('${task.length} Task',
-                      style: TextStyle(
+                    Text('${Provider.of<AddToModel>(context).taskList.length} Task',
+                      style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),),                  ],
@@ -80,7 +83,8 @@ class _TaskListState extends State<TaskList> {
                   color: Colors.white,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30),),
                 ),
-                child: ItemsList(tasks: task),
+                child: ItemsList(),
+                // child: ItemsList(tasks: task),
               ),
             ),
           ]

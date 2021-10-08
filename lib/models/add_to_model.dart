@@ -3,8 +3,14 @@ import 'package:todoey/models/task_model.dart';
 
 class AddToModel extends ChangeNotifier{
 List<Task> taskList = [];
-addToList(){
-  taskList.add(Task(titleText: 'add title'));
+ bool? isChecked = false;
+
+// Function(bool val)? toggleCallBack;
+
+
+addToList({String? taskData, bool? value}){
+  taskList.add(Task(titleText: taskData, value: value, ischecked: isChecked ));
   notifyListeners();
 }
+
 }

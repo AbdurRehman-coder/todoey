@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/add_to_model.dart';
 import 'package:todoey/widgets/add_items_widget.dart';
 class AddItemsList extends StatefulWidget {
   AddItemsList({this.getTextFieldData});
@@ -33,6 +35,11 @@ class _AddItemsListState extends State<AddItemsList> {
             ),),
           SizedBox( height:  15,),
           TextField(
+            onChanged: (String val){
+              textFieldData = val; //Add text input to the new variable in this case textFieldData
+              print(textFieldData);
+
+            },
             decoration: const InputDecoration(
                 hintText: 'Enter your activity',
                 hintStyle: TextStyle(
@@ -58,10 +65,7 @@ class _AddItemsListState extends State<AddItemsList> {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 )
             ),
-            onChanged: (String val){
-            textFieldData = val;
 
-            },
             // onSubmitted: (String value){
             //      titleText = value;
             // },
@@ -83,9 +87,11 @@ class _AddItemsListState extends State<AddItemsList> {
 
                     ),),
                   onPressed: (){
-                    setState(() {
-                      widget.getTextFieldData!(textFieldData);
-                    });
+                    Provider.of<AddToModel>(context, listen: false).addToList(taskData: textFieldData);
+                     Navigator.pop(context);
+                    // setState(() {
+                    //   widget.getTextFieldData!(textFieldData);
+                    // });
 
                   },),
               ),

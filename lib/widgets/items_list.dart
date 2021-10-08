@@ -9,7 +9,7 @@ class ItemsList extends StatefulWidget {
 
 
 
-   ItemsList({this.tasks});
+   // ItemsList({this.tasks});
   // final String? titleText;
   // final bool? isChecked;
   // final void Function(bool? val)? checkboxState;
@@ -23,43 +23,51 @@ class _ItemsListState extends State<ItemsList> {
   bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
-      return ListView.builder(
-          itemCount: widget.tasks!.length,
-          itemBuilder: (context, index){
-            return ListTile(
-              onTap: (){
+      return Consumer<AddToModel>(
+          builder: (context, provid, child) {
+            return ListView.builder(
+                itemCount: Provider.of<AddToModel>(context).taskList.length,
+                itemBuilder: (context, index){
+                  return ListTile(
+                    onTap: (){
 
-              },
-              title: Text(widget.tasks![index].titleText!,
-                style: TextStyle(
-                  decoration: widget.tasks![index].ischecked! ? TextDecoration.lineThrough : null,
-                ),
-              ),
-              trailing: Checkbox(
-                activeColor: Colors.red,
-                fillColor: MaterialStateProperty.all(Colors.lightBlueAccent),
-                checkColor: Colors.red,
-                value: widget.tasks![index].ischecked,
-                onChanged: (newValue){
-                  setState(() {
-                   widget.tasks![index].toggleChecked();
-                  });
+                    },
+                    title: Text(
+                      provid.taskList[index].titleText!,
+                      style: TextStyle(
+                        decoration: provid.isChecked! ? TextDecoration.lineThrough : null,
+                      ),
+                    ),
+                    trailing: Checkbox(
+                        activeColor: Colors.red,
+                        fillColor: MaterialStateProperty.all(Colors.lightBlueAccent),
+                        checkColor: Colors.red,
+                        //value: context.watch<AddToModel>().isChecked,
+                        value: provid.taskList[index].ischecked,
+                        onChanged: (value){
+                          // Provider.of<AddToModel>(context, listen: false);
+                          provid.addToList(value: value);
+
+                          // setState(() {
+                          //   Provider.of<Task>(context).toggleChecked();
+                          // });
+                        }
+                    ),
+
+                  );
+                  // return ItemsTile(
+                  //   titleText: ,
+                  //   isChecked: task![index].ischecked,
+                  //   checkboxState: (value){
+                  //     setState(() {
+                  //       task![index].toggleChecked();
+                  //     });
+                  //   },
+                  // );
+
                 }
-              ),
-
             );
-            // return ItemsTile(
-            //   titleText: ,
-            //   isChecked: task![index].ischecked,
-            //   checkboxState: (value){
-            //     setState(() {
-            //       task![index].toggleChecked();
-            //     });
-            //   },
-            // );
-
-          }
-      );
+          });
 
   }
 }
