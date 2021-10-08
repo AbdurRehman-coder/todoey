@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
+
 class Task{
   String? titleText;
-  bool? ischecked = false;
-  Task({this.ischecked = false, this.titleText});
+
+  Task({ this.titleText});
   String? get getTitleText => titleText;
-  bool? get getIsChecked => ischecked;
   //Toggle method that will toggle the isChecked
+  bool? ischecked = false;
  void toggleChecked(){
    ischecked = !ischecked!; // (!) this sign, the prefix for (not of) and suffixes for (null check)
  }

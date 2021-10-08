@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:todoey/models/add_to_model.dart';
 import 'package:todoey/models/task_model.dart';
 import 'package:todoey/screens/task_list_screen.dart';
-import 'items_tile.dart';
+
 class ItemsList extends StatefulWidget {
 
 
 
 
-   ItemsList({this.tasks});
+   // ItemsList({this.tasks});
   // final String? titleText;
   // final bool? isChecked;
   // final void Function(bool? val)? checkboxState;
@@ -20,46 +20,51 @@ class ItemsList extends StatefulWidget {
 }
 
 class _ItemsListState extends State<ItemsList> {
-  bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
-      return ListView.builder(
-          itemCount: widget.tasks!.length,
-          itemBuilder: (context, index){
-            return ListTile(
-              onTap: (){
+      return Consumer<AddToModel>(
+          builder: (context, provid, child) {
+            return ListView.builder(
+                itemCount: provid.listLength,
+                itemBuilder: (context, index){
+                  return ListTile(
+                    onLongPress: (){
+                      provid.removeTile(index);
+                    },
+                    onTap: (){
 
-              },
-              title: Text(widget.tasks![index].titleText!,
-                style: TextStyle(
-                  decoration: widget.tasks![index].ischecked! ? TextDecoration.lineThrough : null,
-                ),
-              ),
-              trailing: Checkbox(
-                activeColor: Colors.red,
-                fillColor: MaterialStateProperty.all(Colors.lightBlueAccent),
-                checkColor: Colors.red,
-                value: widget.tasks![index].ischecked,
-                onChanged: (newValue){
-                  setState(() {
-                   widget.tasks![index].toggleChecked();
-                  });
+                    },
+                    title: Text(
+                      provid.tasks[index].titleText!,
+                      style: TextStyle(
+                        decoration: provid.tasks[index].ischecked! ? TextDecoration.lineThrough : null,
+                      ),
+                    ),
+                    trailing: Checkbox(
+                        activeColor: Colors.red,
+                        fillColor: MaterialStateProperty.all(Colors.lightBlueAccent),
+                        checkColor: Colors.red,
+                        //value: context.watch<AddToModel>().isChecked,
+                        value: provid.tasks[index].ischecked,
+                        onChanged: (value){
+                       provid.toggleTask(provid.tasks[index]);
+                        }
+                    ),
+
+                  );
+                  // return ItemsTile(
+                  //   titleText: ,
+                  //   isChecked: task![index].ischecked,
+                  //   checkboxState: (value){
+                  //     setState(() {
+                  //       task![index].toggleChecked();
+                  //     });
+                  //   },
+                  // );
+
                 }
-              ),
-
             );
-            // return ItemsTile(
-            //   titleText: ,
-            //   isChecked: task![index].ischecked,
-            //   checkboxState: (value){
-            //     setState(() {
-            //       task![index].toggleChecked();
-            //     });
-            //   },
-            // );
-
-          }
-      );
+          });
 
   }
 }
